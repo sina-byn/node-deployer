@@ -1,0 +1,9 @@
+aia:
+  deploy: test
+  init: test
+  custom:
+    - git init
+
+mojall:
+  deploy: test
+  init: test

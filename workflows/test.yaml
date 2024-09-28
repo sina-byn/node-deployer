@@ -1,0 +1,5 @@
+deploy:
+  - npm i react react-dom
+  - npm uninstall react react-dom
+init:
+  - git status
