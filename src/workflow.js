@@ -13,7 +13,7 @@ import prettyMs from 'pretty-ms';
 // * utils
 import logger from './logger.js';
 
-import { __dirname } from './utils.js';
+import { applyVars, __dirname } from './utils.js';
 import { resolveConfig } from './config.js';
 
 // * constants
@@ -37,9 +37,12 @@ const loadWorkflow = (workflow, action) => {
 const resolveWorkflow = (action, project, custom = false) => {
   const config = resolveConfig();
   const projectConfig = config[project];
+  const { vars } = projectConfig;
 
   if (custom) {
-    if (typeof custom === 'string') return loadWorkflow(path.basename(custom), action);
+    if (typeof custom === 'string') {
+      return loadWorkflow(path.basename(custom), action).map(c => applyVars(c, vars));
+    }
 
     const customWorkflow = projectConfig.custom;
     if (!customWorkflow) throw new Error(`No Custom Workflow Specified For '${project}' In Config`);
@@ -50,7 +53,7 @@ const resolveWorkflow = (action, project, custom = false) => {
   const workflow = projectConfig[action];
   if (!workflow) throw new Error(`Could Not Find Action '${action}' For '${project}' In Config`);
 
-  return loadWorkflow(workflow, action);
+  return loadWorkflow(workflow, action).map(c => applyVars(c, vars));
 };
 
 const execWorkflow = (workflowQueue, socket = null) => {
@@ -59,6 +62,8 @@ const execWorkflow = (workflowQueue, socket = null) => {
   const initTime = Date.now();
   const root = process.cwd();
   const isCLI = !socket;
+
+  // console.log(workflowQueue);
 
   // workflowQueue = [
   //   'cd',

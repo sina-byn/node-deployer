@@ -3,6 +3,8 @@ aia:
   init: test
   custom:
     - git init
+  vars:
+    dir: test
 
 mojall:
   deploy: test
