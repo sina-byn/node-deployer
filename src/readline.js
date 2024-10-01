@@ -8,9 +8,14 @@ const initReadline = port => {
 
   rl.on('line', input => {
     switch (input.trim()) {
-      case 'o': {
-        open(process.env.URL || `http://localhost:${port}`);
-      }
+      case 'o':
+        return open(process.env.URL || `http://localhost:${port}`);
+
+      case 'cls':
+        return console.clear();
+
+      case 'exit':
+        return process.exit();
     }
   });
 };
