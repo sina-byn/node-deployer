@@ -1,5 +1,7 @@
 deploy:
-  - npm i react react-dom
-  - npm uninstall react react-dom
+  - cd
+  - mkdir <dir>
+  - cd test
+  - cd
 init:
   - git status
