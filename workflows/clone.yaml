@@ -1,0 +1,15 @@
+init:
+  - cd
+  - cd ..
+  - cd
+  - git clone <repo>
+  - cd <dir>
+  - npm i
+
+deploy:
+  - cd
+  - cd ..
+  - cd
+  - cd <dir>
+  - npm run build
+  - npm run preview

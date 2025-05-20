@@ -9,3 +9,10 @@ aia:
 mojall:
   deploy: test
   init: test
+
+deployer-sample:
+  init: clone
+  deploy: clone
+  vars:
+    dir: deployer-sample
+    repo: 'https://github.com/sina-byn/deployer-sample.git'
