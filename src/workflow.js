@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 // * execa
-import { $ } from 'execa';
+import { $, execa } from 'execa';
 
 // * js-yaml
 import yaml from 'js-yaml';
@@ -63,7 +63,7 @@ const execWorkflow = (workflowQueue, socket = null) => {
   const root = process.cwd();
   const isCLI = !socket;
 
-  // console.log(workflowQueue);
+  console.log(workflowQueue);
 
   // workflowQueue = [
   //   'cd',
@@ -78,9 +78,8 @@ const execWorkflow = (workflowQueue, socket = null) => {
   let index = 0;
 
   const execCommand = command => {
-    command = command.trim();
-
-    const cp = $`${command}`;
+    const [bin, ...args] = command.trim().split(/\s+/);
+    const cp = execa(bin, args);
 
     cp.then(() => {
       if (command.startsWith('cd')) {
